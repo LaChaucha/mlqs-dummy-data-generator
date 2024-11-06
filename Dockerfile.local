@@ -1,0 +1,8 @@
+FROM rocketbuddha/ww-sp-java17-builder:0.10 AS builder
+WORKDIR /tmp/ww/mlqs-dummy-data-generator
+COPY . .
+RUN mvn clean package -DskipTests
+FROM openjdk:17-jdk-slim
+WORKDIR /opt/ww/mlqs-dummy-data-generator
+COPY --from=builder /tmp/ww/mlqs-dummy-data-generator/target/mlqs-dummy-data-generator.jar /opt/ww/mlqs-dummy-data-generator
+CMD ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "mlqs-dummy-data-generator.jar", "--spring.profiles.active=compose"]

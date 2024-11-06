@@ -1,0 +1,27 @@
+spring:
+  security:
+    user:
+      name: api
+      password: api
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: user
+    password: password
+    cache:
+      #channel:
+      #  size: 0 #maximum number of allowed channels - default 0 (channel limiting not enabled)
+      connection:
+        mode: channel
+        size: 1 #maximum number of connections in a cache.
+    virtual-host: compose
+    exchanges:
+      random-events: mlqs.dummy.data.generator.random.event.ex
+jasypt:
+  encryptor:
+    password: ${JASYPT_PASS}
+server:
+  port : 8082
+#logging:
+#  level:
+#    root: DEBUG
