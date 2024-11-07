@@ -20,6 +20,13 @@ spring:
 jasypt:
   encryptor:
     password: ${JASYPT_PASS}
+
+files:
+  employees:
+    path: "./employees.csv"
+  images:
+    path: "./images"
+
 server:
   port : 8082
 #logging:

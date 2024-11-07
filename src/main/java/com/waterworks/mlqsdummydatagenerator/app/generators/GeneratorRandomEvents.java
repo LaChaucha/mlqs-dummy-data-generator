@@ -15,6 +15,7 @@ import com.waterworks.mlqsdummydatagenerator.app.generators.domain.Supplier;
 import com.waterworks.mlqsdummydatagenerator.app.generators.domain.Transaction;
 import com.waterworks.mlqsdummydatagenerator.infra.httpout.image.api.RandomImageRepo;
 import jakarta.annotation.PostConstruct;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -72,6 +73,12 @@ public class GeneratorRandomEvents {
 
   @Value("${spring.rabbitmq.exchanges.random-events}")
   private List<String> randomEventsEx;
+
+  @Value("${files.employees.path}")
+  private String pathEmployeesfile;
+
+  @Value("${files.images.path}")
+  private String pathImagesfile;
 
   public void generate() {
     // employees    -> file
@@ -248,7 +255,8 @@ public class GeneratorRandomEvents {
       sendMessage("product_catalog", "Product", product);
       products.add(product);
 
-      final String imageFilepath = "images\\".concat(product.getProductId()).concat(".jpg");
+      final String imageFilepath =
+          pathImagesfile.concat(File.separator).concat(product.getProductId()).concat(".jpg");
       generateProductImages(imageFilepath);
     }
   }
@@ -348,7 +356,7 @@ public class GeneratorRandomEvents {
   }
 
   private void saveEmployee(final Employee employeeGenerated) {
-    appendEmployeeToFile(employeeGenerated, "employees.csv"
+    appendEmployeeToFile(employeeGenerated, pathEmployeesfile
     );
   }
 

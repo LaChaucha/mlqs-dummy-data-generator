@@ -19,6 +19,13 @@ spring:
     virtual-host: compose
     exchanges:
       random-events: mlqs.dummy.data.generator.random.event.ex
+
+files:
+  employees:
+    path: "/opt/ww/mlqs-dummy-data-generator/output/employees.csv"
+  images:
+    path: "/opt/ww/mlqs-dummy-data-generator/output/images"
+
 jasypt:
   encryptor:
     password: ${JASYPT_PASS}
